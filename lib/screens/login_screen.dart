@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:lvtn_mangxahoi/screens/home_screen.dart';
 import 'package:lvtn_mangxahoi/screens/signup_screen.dart';
 import 'package:lvtn_mangxahoi/utils/colors.dart';
 import 'package:lvtn_mangxahoi/widgets/text_field_input.dart';

@@ -18,20 +18,61 @@ class AddPostScreen extends StatefulWidget {
 
 class _AddPostScreenState extends State<AddPostScreen> {
   Uint8List? _file;
+  bool isLoading = false;
   final TextEditingController _descriptionController = TextEditingController();
 
   void postImage(String uid, String username, String profImage) async {
+    // try {
+    //   String res = await FirestoreMethods().uploadPost(
+    //       _descriptionController.text, _file!, uid, username, profImage);
+    //   if (res == 'success') {
+    //     showSnackBar(context, 'Posted!');
+    //   } else {
+    //     showSnackBar(context, res);
+    //   }
+    // } catch (e) {
+    //   showSnackBar(context, e.toString());
+    // }
+    setState(() {
+      isLoading = true;
+    });
+    // start the loading
     try {
+      // upload to storage and db
       String res = await FirestoreMethods().uploadPost(
-          _descriptionController.text, _file!, uid, username, profImage);
-      if (res == 'success') {
-        showSnackBar(context, 'Posted!');
+        _descriptionController.text,
+        _file!,
+        uid,
+        username,
+        profImage,
+      );
+      if (res == "success") {
+        setState(() {
+          isLoading = false;
+        });
+        showSnackBar(
+          context,
+          'Posted!',
+        );
+        clearImage();
       } else {
         showSnackBar(context, res);
       }
-    } catch (e) {
-      showSnackBar(context, e.toString());
+    } catch (err) {
+      setState(() {
+        isLoading = false;
+      });
+      showSnackBar(
+        context,
+        err.toString(),
+      );
     }
+  }
+
+  void clearImage() {
+    setState(() {
+      _file = null;
+    });
   }
 
   _selectImage(BuildContext context) async {
@@ -90,6 +131,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
             child: IconButton(
               onPressed: () => _selectImage(context),
               icon: Icon(Icons.upload),
+              color: kBlack,
             ),
           )
         : Scaffold(
@@ -102,7 +144,8 @@ class _AddPostScreenState extends State<AddPostScreen> {
               title: const Text('Post to'),
               actions: [
                 TextButton(
-                  onPressed: () => postImage(user.uid, user.username, user.photoUrl),
+                  onPressed: () =>
+                      postImage(user.uid, user.username, user.photoUrl),
                   child: const Text(
                     'Post',
                     style: TextStyle(

@@ -48,11 +48,14 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
       body: PageView(
         children: HomeScreenItems,
         controller: pageController,
-        // physics: const NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         onPageChanged: onPageChanged,
       ),
       bottomNavigationBar: CurvedNavigationBar(
-        backgroundColor: mobileBackgroundColor,
+        // backgroundColor: mobileBackgroundColor,
+        // backgroundColor: k2MainThemeColor,
+        backgroundColor: kWhite,
+        color: k2MainThemeColor,
         animationDuration: Duration(milliseconds: 300),
         height: 60,
         items: [

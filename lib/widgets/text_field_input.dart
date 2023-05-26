@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lvtn_mangxahoi/utils/colors.dart';
 
 class TextFieldInput extends StatelessWidget {
   final TextEditingController textEditingController;
@@ -19,7 +20,9 @@ class TextFieldInput extends StatelessWidget {
         OutlineInputBorder(borderSide: Divider.createBorderSide(context));
     return TextField(
       controller: textEditingController,
+      cursorColor: secondaryColor,
       decoration: InputDecoration(
+        fillColor: secondaryColor,
         hintText: hintText,
         border: inputBorder,
         focusedBorder: inputBorder,

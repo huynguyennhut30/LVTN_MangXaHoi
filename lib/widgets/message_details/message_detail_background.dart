@@ -1,41 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:lvtn_mangxahoi/utils/colors.dart';
 import 'dart:math' as math;
 
-import '../utils/colors.dart';
+class MessageDetailBackground extends StatelessWidget {
+  const MessageDetailBackground({Key? key, required this.child})
+      : super(key: key);
 
-class BackgroungHome extends StatelessWidget {
-  const BackgroungHome({super.key, required this.child});
   final Widget child;
+
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Stack(
-        alignment: Alignment.center,
         children: [
           Positioned(
-            top: -20,
-            left: -480,
-            child: Transform.rotate(
-              angle: -math.pi / 4,
-              child: Container(
-                height: 469,
-                width: 680,
-                decoration: BoxDecoration(
-                  color: k2MainThemeColor,
-                  // color: k2AccentStroke,
-                  borderRadius: BorderRadius.circular(152.0),
-                ),
+            top: 0.0,
+            left: 0.0,
+            right: 0.0,
+            child: Container(
+              height: size.height * 0.35,
+              decoration: BoxDecoration(
+                color: k2MainThemeColor,
+                borderRadius: BorderRadius.circular(34.0),
               ),
             ),
           ),
           Positioned(
-            top: -20,
-            left: -480,
+            top: 150,
+            left: -150,
             child: Transform.rotate(
-              angle: -math.pi / 4,
+              angle: math.pi / 4,
               child: Container(
-                width: 504,
-                height: 564,
+                height: 465,
+                width: 473,
                 decoration: BoxDecoration(
                   border: Border.all(width: 1.0, color: kWhite),
                   borderRadius: BorderRadius.circular(152.0),
@@ -44,13 +42,13 @@ class BackgroungHome extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: 0.0,
-            left: -480,
+            top: 180,
+            left: -180,
             child: Transform.rotate(
-              angle: -math.pi / 4,
+              angle: math.pi / 4,
               child: Container(
-                width: 453,
-                height: 537,
+                height: 465,
+                width: 473,
                 decoration: BoxDecoration(
                   border: Border.all(width: 1.0, color: kWhite),
                   borderRadius: BorderRadius.circular(152.0),

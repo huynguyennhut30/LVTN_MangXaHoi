@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
-import '../utils/colors.dart';
+import 'package:lvtn_mangxahoi/utils/colors.dart';
 
-class BackgroungHome extends StatelessWidget {
-  const BackgroungHome({super.key, required this.child});
+class MessageBackground extends StatelessWidget {
+  const MessageBackground({Key? key, required this.child}) : super(key: key);
+
   final Widget child;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,46 +15,42 @@ class BackgroungHome extends StatelessWidget {
         alignment: Alignment.center,
         children: [
           Positioned(
-            top: -20,
-            left: -480,
+            top: 150.0,
             child: Transform.rotate(
-              angle: -math.pi / 4,
+              angle: math.pi / 4,
               child: Container(
-                height: 469,
-                width: 680,
+                height: 465,
+                width: 473,
+                decoration: BoxDecoration(
+                  border: Border.all(width: 1.0, color: k3AccentLines),
+                  borderRadius: BorderRadius.circular(152.0),
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            top: 200.0,
+            child: Transform.rotate(
+              angle: math.pi / 4,
+              child: Container(
+                height: 465,
+                width: 473,
+                decoration: BoxDecoration(
+                  border: Border.all(width: 1.0, color: k3AccentLines),
+                  borderRadius: BorderRadius.circular(152.0),
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            top: 260,
+            child: Transform.rotate(
+              angle: math.pi / 4,
+              child: Container(
+                height: 575,
+                width: 580,
                 decoration: BoxDecoration(
                   color: k2MainThemeColor,
-                  // color: k2AccentStroke,
-                  borderRadius: BorderRadius.circular(152.0),
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            top: -20,
-            left: -480,
-            child: Transform.rotate(
-              angle: -math.pi / 4,
-              child: Container(
-                width: 504,
-                height: 564,
-                decoration: BoxDecoration(
-                  border: Border.all(width: 1.0, color: kWhite),
-                  borderRadius: BorderRadius.circular(152.0),
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            top: 0.0,
-            left: -480,
-            child: Transform.rotate(
-              angle: -math.pi / 4,
-              child: Container(
-                width: 453,
-                height: 537,
-                decoration: BoxDecoration(
-                  border: Border.all(width: 1.0, color: kWhite),
                   borderRadius: BorderRadius.circular(152.0),
                 ),
               ),

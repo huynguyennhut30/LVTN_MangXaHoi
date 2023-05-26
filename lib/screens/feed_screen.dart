@@ -6,6 +6,7 @@ import 'package:lvtn_mangxahoi/widgets/background_home.dart';
 import 'package:lvtn_mangxahoi/widgets/post_card.dart';
 
 import '../utils/global_variables.dart';
+import 'message_screen.dart';
 
 class FeedScreen extends StatefulWidget {
   const FeedScreen({super.key});
@@ -36,10 +37,17 @@ class _FeedScreenState extends State<FeedScreen> {
           actions: [
             IconButton(
               icon: const Icon(
-                Icons.messenger,
+                Icons.mail_sharp,
                 color: kBlack,
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MessageScreen(),
+                  ),
+                );
+              },
             ),
           ],
         ),

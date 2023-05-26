@@ -69,6 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
       body: SafeArea(
           child: Container(
         padding: EdgeInsets.symmetric(horizontal: 32),
+        color: Color.fromARGB(255, 196, 250, 253),
         width: double.infinity,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -78,15 +79,17 @@ class _LoginScreenState extends State<LoginScreen> {
               flex: 2,
             ),
             SvgPicture.asset(
-              'assets/ic_instagram.svg',
-              color: primaryColor,
+              'assets/iconApp.png',
+              // color: primaryColor,
+              color: kBlack ,
               height: 64,
             ),
             const SizedBox(height: 64),
             TextFieldInput(
-                textEditingController: _emailController,
-                hintText: 'Enter your email',
-                textInputType: TextInputType.emailAddress),
+              textEditingController: _emailController,
+              hintText: 'Enter your email',
+              textInputType: TextInputType.emailAddress,
+            ),
             const SizedBox(height: 24),
             TextFieldInput(
               textEditingController: _passwordController,
@@ -127,7 +130,7 @@ class _LoginScreenState extends State<LoginScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  child: Text("Don't have an account?"),
+                  child: Text("Don't have an account?", style: TextStyle(color: Colors.black),),
                   padding: const EdgeInsets.symmetric(
                     vertical: 8,
                   ),
@@ -137,7 +140,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Container(
                     child: Text(
                       "Sign up",
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
                     ),
                     padding: const EdgeInsets.symmetric(
                       vertical: 8,

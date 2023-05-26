@@ -21,18 +21,43 @@ class _SearchScreenState extends State<SearchScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: mobileBackgroundColor,
-        title: Form(
-          child: TextFormField(
-            controller: searchController,
-            decoration:
-                const InputDecoration(labelText: 'Search for a user...'),
-            onFieldSubmitted: (String _) {
-              setState(() {
-                isShowUsers = true;
-              });
-              print(_);
-            },
-          ),
+        title: Row(
+          children: [
+            Expanded(
+              child: Container(
+                height: 40,
+                padding: EdgeInsets.only(left: 10),
+                margin: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Color.fromARGB(255, 193, 190, 190)),
+                  borderRadius: BorderRadius.circular(20)
+                ),
+                child: TextFormField(
+                  controller: searchController,
+                  style: TextStyle(color: Colors.black),
+                  decoration:
+                      const InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Search for a user...',
+                        hintStyle: TextStyle(color: Colors.black,fontSize: 16),
+                        ),
+                  onFieldSubmitted: (String _) {
+                    setState(() {
+                      isShowUsers = true;
+                    });
+                    print(_);
+                  },
+                ),
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.all(4),
+              decoration: BoxDecoration(
+                color: Colors.grey,
+                borderRadius: BorderRadius.circular(40)
+              ),
+              child: Icon(Icons.search,color: Colors.white,size: 27,))
+          ],
         ),
       ),
       body: isShowUsers

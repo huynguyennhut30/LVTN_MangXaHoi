@@ -31,4 +31,40 @@ class FirestoreMethods {
     }
     return res;
   }
+  Future<String> updateInforUser({Uint8List? file,String? id,String? username,String? bio})async {
+    try{
+      late String photoUrl="";
+      if(file!=null){
+          photoUrl = await StorageMethods().uploadImageToStorage('profilePic', file, true);
+      }
+      
+      Map<String,dynamic> data = Map();
+      if(username!.isNotEmpty){
+        data['username']= username;
+      }
+      if(bio!.isNotEmpty){
+        data['bio']= bio;
+      }
+       if(photoUrl!=""){
+        data['photoUrl'] = photoUrl;
+      }
+      
+      _firestore.collection("users").doc(id).get().then(
+        (value){
+          if(value.exists){
+            
+            return _firestore.collection("users").doc(id).update(
+              data
+            );
+          }else {
+            return "dont found";
+          }
+        }
+      );
+    }catch(e){
+      print(e);
+    }
+    return "";
+  } 
 }
+FirestoreMethods fireMethod = new FirestoreMethods();

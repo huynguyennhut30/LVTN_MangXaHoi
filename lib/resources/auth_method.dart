@@ -2,7 +2,6 @@ import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:lvtn_mangxahoi/models/user.dart' as model;
 import 'package:lvtn_mangxahoi/resources/storage_method.dart';
 
@@ -16,7 +15,7 @@ class AuthMethod {
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get();
-        return model.User.fromSnap(snap);
+    return model.User.fromSnap(snap);
   }
 
   Future<String> signUpUser({
@@ -45,6 +44,10 @@ class AuthMethod {
             photoUrl: photoUrl,
             email: email,
             bio: bio,
+            createdAt: '',
+            isOnline: false,
+            lastActive: '',
+            pushToken: '',
             followers: [],
             following: []);
 

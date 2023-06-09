@@ -26,7 +26,8 @@ class _MessageScreenState extends State<MessageScreen> {
           leading: IconButton(
             onPressed: () => Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const MobileScreenLayout()),
+              MaterialPageRoute(
+                  builder: (context) => const MobileScreenLayout()),
             ),
             // icon: SvgPicture.asset('assets/button_back.svg'),
             icon: Icon(

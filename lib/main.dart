@@ -12,6 +12,7 @@ import 'responsive/responsive_layout_screen.dart';
 import 'responsive/web_screen_layout.dart';
 import 'utils/colors.dart';
 
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   if (kIsWeb) {

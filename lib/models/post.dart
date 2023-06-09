@@ -5,12 +5,14 @@ class Post {
   final String uid;
   final String username;
   final likes;
+  final saves;
   final String postId;
   final DateTime datePublished;
   final String postUrl;
   final String profImage;
 
   const Post({
+    required this.saves,
     required this.description,
     required this.uid,
     required this.username,
@@ -32,7 +34,8 @@ class Post {
         datePublished: snapshot["datePublished"],
         username: snapshot["username"],
         postUrl: snapshot['postUrl'],
-        profImage: snapshot['profImage']);
+        profImage: snapshot['profImage'],
+        saves: snapshot['saves']);
   }
 
   Map<String, dynamic> toJson() => {
@@ -43,6 +46,7 @@ class Post {
         "postId": postId,
         "datePublished": datePublished,
         'postUrl': postUrl,
-        'profImage': profImage
+        'profImage': profImage,
+        'saves': saves
       };
 }

@@ -9,6 +9,8 @@ import 'package:lvtn_mangxahoi/utils/colors.dart';
 import 'package:lvtn_mangxahoi/utils/utils.dart';
 import 'package:provider/provider.dart';
 
+import '../resources/firestore_methods.dart';
+
 class AddPostScreen extends StatefulWidget {
   const AddPostScreen({super.key});
 
@@ -39,7 +41,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
     // start the loading
     try {
       // upload to storage and db
-      String res = await FirestoreMethods().uploadPost(
+      String res = await FireStoreMethods().uploadPost(
         _descriptionController.text,
         _file!,
         uid,
@@ -200,4 +202,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
             ),
           );
   }
+}
+
+class FirestoreMethods {
 }

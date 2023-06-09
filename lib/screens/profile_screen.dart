@@ -212,7 +212,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       GestureDetector(
                         onTap: () => _changeTab('photos'),
                         child: SvgPicture.asset(
-                          'assets/icons/Button-photos.svg',
+                          'assets/Button-photos.svg',
                           height: 20,
                           color:
                               _selectedTab == 'photos' ? k2AccentStroke : null,
@@ -221,7 +221,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       GestureDetector(
                         onTap: () => _changeTab('saved'),
                         child: SvgPicture.asset(
-                          'assets/icons/Button-saved.svg',
+                          'assets/Button-saved.svg',
                           height: 20,
                           color:
                               _selectedTab == 'saved' ? k2AccentStroke : null,
@@ -229,42 +229,83 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ],
                   ),
-                  FutureBuilder(
-                    future: FirebaseFirestore.instance
-                        .collection('posts')
-                        .where('uid', isEqualTo: widget.uid)
-                        .get(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
+                  _selectedTab == "photos"
+                      ? FutureBuilder(
+                          future: FirebaseFirestore.instance
+                              .collection('posts')
+                              .where('uid', isEqualTo: widget.uid)
+                              .get(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
 
-                      return GridView.builder(
-                        shrinkWrap: true,
-                        itemCount: (snapshot.data! as dynamic).docs.length,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
-                          crossAxisSpacing: 5,
-                          mainAxisSpacing: 1.5,
-                          childAspectRatio: 1,
-                        ),
-                        itemBuilder: (context, index) {
-                          DocumentSnapshot snap =
-                              (snapshot.data! as dynamic).docs[index];
+                            return GridView.builder(
+                              shrinkWrap: true,
+                              itemCount:
+                                  (snapshot.data! as dynamic).docs.length,
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3,
+                                crossAxisSpacing: 5,
+                                mainAxisSpacing: 1.5,
+                                childAspectRatio: 1,
+                              ),
+                              itemBuilder: (context, index) {
+                                DocumentSnapshot snap =
+                                    (snapshot.data! as dynamic).docs[index];
 
-                          return Container(
-                            child: Image(
-                              image: NetworkImage(snap['postUrl']),
-                              fit: BoxFit.cover,
-                            ),
-                          );
-                        },
-                      );
-                    },
-                  )
+                                return Container(
+                                  child: Image(
+                                    image: NetworkImage(snap['postUrl']),
+                                    fit: BoxFit.cover,
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                        )
+                      : FutureBuilder(
+                          future: FirebaseFirestore.instance
+                              .collection('posts')
+                              .where('saves', arrayContains: widget.uid)
+                              .get(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+
+                            return GridView.builder(
+                              shrinkWrap: true,
+                              itemCount:
+                                  (snapshot.data! as dynamic).docs.length,
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3,
+                                crossAxisSpacing: 5,
+                                mainAxisSpacing: 1.5,
+                                childAspectRatio: 1,
+                              ),
+                              itemBuilder: (context, index) {
+                                DocumentSnapshot snap =
+                                    (snapshot.data! as dynamic).docs[index];
+
+                                return Container(
+                                  child: Image(
+                                    image: NetworkImage(snap['postUrl']),
+                                    fit: BoxFit.cover,
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                        )
                 ],
               ),
             ),
@@ -289,7 +330,6 @@ class ProfileImageClipper extends CustomClipper<Path> {
       ..lineTo(radius, size.height / 2 + radius)
       ..quadraticBezierTo(0, size.height / 2, radius, size.height / 2 - radius)
       ..close();
-
     return path;
   }
 

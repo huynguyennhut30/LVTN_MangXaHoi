@@ -3,9 +3,11 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:lvtn_mangxahoi/utils/colors.dart';
 import 'package:lvtn_mangxahoi/utils/global_variables.dart';
 
+import '../resources/firestore_methods.dart';
 import '../utils/global_variables.dart';
 
 class MobileScreenLayout extends StatefulWidget {
@@ -23,6 +25,18 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
     // TODO: implement initState
     super.initState();
     pageController = PageController();
+    FireStoreMethods.getSelfInfo();
+    SystemChannels.lifecycle.setMessageHandler((message) {
+      if (FireStoreMethods.Auth.currentUser != null) {
+        if (message.toString().contains('resume')) {
+          FireStoreMethods.updateActiveStatus(true);
+        }
+        if (message.toString().contains('pause')) {
+          FireStoreMethods.updateActiveStatus(false);
+        }
+      }
+      return Future.value(message);
+    });
   }
 
   @override

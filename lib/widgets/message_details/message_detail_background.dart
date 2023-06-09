@@ -19,11 +19,14 @@ class MessageDetailBackground extends StatelessWidget {
             left: 0.0,
             right: 0.0,
             child: Container(
-              height: size.height * 0.35,
-              decoration: BoxDecoration(
-                color: k2MainThemeColor,
-                borderRadius: BorderRadius.circular(34.0),
-              ),
+              // height: size.height * 0.35,
+              height: size.height * 0.13,
+              decoration: const BoxDecoration(
+                  color: k2MainThemeColor,
+                  // borderRadius: BorderRadius.circular(34.0),
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(34),
+                      bottomRight: Radius.circular(34))),
             ),
           ),
           Positioned(

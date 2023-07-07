@@ -37,4 +37,10 @@ const k3AccentLines = Color(0xFFEEF2E2);
 
 const kCaption = Color(0xFF656565);
 
-const kSelectedTabColor = Color(0xFF7DB9B3);
+const kSelectedTabColor = Color.fromRGBO(125, 185, 179, 1);
+
+//====================================
+const kPrimaryColor = Color(0xFF6F35A5);
+const kPrimaryLightColor = Color(0xFFF1E6FF);
+
+const double defaultPadding = 16.0;

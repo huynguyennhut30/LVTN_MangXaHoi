@@ -1,20 +1,25 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_notification_channel/flutter_notification_channel.dart';
+import 'package:flutter_notification_channel/notification_importance.dart';
+import 'package:lvtn_mangxahoi/provider/post_provider.dart';
 import 'package:lvtn_mangxahoi/provider/user_provider.dart';
-import 'package:lvtn_mangxahoi/screens/login_screen.dart';
-import 'package:lvtn_mangxahoi/screens/signup_screen.dart';
+import 'package:lvtn_mangxahoi/screens/login_screens.dart';
 import 'package:provider/provider.dart';
 
 import 'responsive/mobile_screen_layout.dart';
 import 'responsive/responsive_layout_screen.dart';
 import 'responsive/web_screen_layout.dart';
 import 'utils/colors.dart';
-
+import 'package:lvtn_mangxahoi/utils/sharedpreference.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await sharedPreferences.initPreference();
   if (kIsWeb) {
     await Firebase.initializeApp(
       options: const FirebaseOptions(
@@ -30,8 +35,14 @@ void main() async {
         // options: DefaultFirebaseOptions.currentPlatform,
         );
   }
-
-  runApp(MyApp());
+  var result = await FlutterNotificationChannel.registerNotificationChannel(
+    description: 'Your channel description',
+    id: 'chats',
+    importance: NotificationImportance.IMPORTANCE_HIGH,
+    name: 'Chats',
+  );
+  log('Result: $result');
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -45,6 +56,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => UserProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => PostsProvider(),
+        )
       ],
       child: MaterialApp(
         title: 'Snapshare',
@@ -78,7 +92,7 @@ class MyApp extends StatelessWidget {
                 ),
               );
             }
-            return LoginScreen();
+            return const LoginScreens();
           },
         ),
       ),

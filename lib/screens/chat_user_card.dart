@@ -1,12 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lvtn_mangxahoi/resources/firestore_methods.dart';
 import 'package:lvtn_mangxahoi/screens/chat_detail_screen.dart';
 
-import '../main.dart';
 import '../models/message.dart';
 import '../models/user.dart';
-import '../utils/colors.dart';
 import '../utils/colors.dart';
 import '../widgets/my_date_util.dart';
 
@@ -27,10 +27,10 @@ class _ChatUserCardState extends State<ChatUserCard> {
   Widget build(BuildContext context) {
     return Card(
       // margin: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.4, vertical: 4),
-      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       shadowColor: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      color: Color.fromARGB(255, 238, 235, 235).withOpacity(0.6),
+      color: const Color.fromARGB(255, 238, 235, 235).withOpacity(0.6),
       elevation: 0,
       child: InkWell(
         onTap: () {
@@ -101,12 +101,6 @@ class _ChatUserCardState extends State<ChatUserCard> {
                           MyDateUtil.getFormattedTime(
                               context: context, time: _message!.sent),
                           style: const TextStyle(color: Colors.black54)),
-              // trailing: Text(
-              //   '12h',
-              //   style: TextStyle(
-              //     color: kBlack,
-              //   ),
-              // ),
             );
           },
         ),

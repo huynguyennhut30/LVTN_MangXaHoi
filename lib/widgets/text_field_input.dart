@@ -6,18 +6,23 @@ class TextFieldInput extends StatelessWidget {
   final bool isPass;
   final String hintText;
   final TextInputType textInputType;
+  final Icon icon;
 
   const TextFieldInput(
       {super.key,
       required this.textEditingController,
       this.isPass = false,
       required this.hintText,
-      required this.textInputType});
+      required this.textInputType,
+      required this.icon});
 
   @override
   Widget build(BuildContext context) {
-    final inputBorder =
-        OutlineInputBorder(borderSide: Divider.createBorderSide(context));
+    Size size = MediaQuery.of(context).size;
+    final inputBorder = OutlineInputBorder(
+      borderSide: Divider.createBorderSide(context),
+      borderRadius: BorderRadius.circular(29.0),
+    );
     return TextField(
       controller: textEditingController,
       cursorColor: secondaryColor,
@@ -28,7 +33,7 @@ class TextFieldInput extends StatelessWidget {
         focusedBorder: inputBorder,
         enabledBorder: inputBorder,
         filled: true,
-        contentPadding: EdgeInsets.all(8),
+        contentPadding: EdgeInsets.all(14),
       ),
       keyboardType: textInputType,
       obscureText: isPass,

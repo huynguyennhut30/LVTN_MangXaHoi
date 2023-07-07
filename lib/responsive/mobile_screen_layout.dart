@@ -1,14 +1,19 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:lvtn_mangxahoi/screens/add_post_screen.dart';
+import 'package:lvtn_mangxahoi/screens/home_screens.dart';
+import 'package:lvtn_mangxahoi/screens/notification_screen.dart';
+import 'package:lvtn_mangxahoi/screens/profile_screen.dart';
+import 'package:lvtn_mangxahoi/screens/search_screen.dart';
+import 'package:lvtn_mangxahoi/screens/search_screenss.dart';
 import 'package:lvtn_mangxahoi/utils/colors.dart';
-import 'package:lvtn_mangxahoi/utils/global_variables.dart';
 
 import '../resources/firestore_methods.dart';
-import '../utils/global_variables.dart';
+
+import 'package:lvtn_mangxahoi/utils/key_shared.dart';
+import 'package:lvtn_mangxahoi/utils/sharedpreference.dart';
 
 class MobileScreenLayout extends StatefulWidget {
   const MobileScreenLayout({Key? key}) : super(key: key);
@@ -56,14 +61,30 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
     });
   }
 
+  List<Widget> getList() {
+    String a = sharedPreferences.getString(keyShared.CURRENTUSER);
+    return [
+      // const Text('Notifications'),
+      const HomeScreen(),
+      const SearchScreen(),
+      // const SearchScreenss(),
+      const AddPostScreen(),
+      const notificationScreen(),
+      // const Text('Notifications'),
+      ProfileScreen(
+        uid: sharedPreferences.getString(keyShared.CURRENTUSER),
+      ),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageView(
-        children: HomeScreenItems,
         controller: pageController,
         physics: const NeverScrollableScrollPhysics(),
         onPageChanged: onPageChanged,
+        children: getList(),
       ),
       bottomNavigationBar: CurvedNavigationBar(
         // backgroundColor: mobileBackgroundColor,
@@ -74,25 +95,25 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
         height: 60,
         items: [
           Icon(
-              Icons.home,
-              color: _page == 0 ? blackColor : secondaryColor,
-            ),
-            Icon(
-              Icons.search,
-              color: _page == 1 ? blackColor : secondaryColor,
-            ),
-            Icon(
-              Icons.add_circle,
-              color: _page == 2 ? blackColor : secondaryColor,
-            ),
-            Icon(
-              Icons.notifications,
-              color: _page == 3 ? blackColor : secondaryColor,
-            ),
-            Icon(
-              Icons.person,
-              color: _page == 4 ? blackColor : secondaryColor,
-            ),
+            Icons.home,
+            color: _page == 0 ? blackColor : secondaryColor,
+          ),
+          Icon(
+            Icons.search,
+            color: _page == 1 ? blackColor : secondaryColor,
+          ),
+          Icon(
+            Icons.add_circle,
+            color: _page == 2 ? blackColor : secondaryColor,
+          ),
+          Icon(
+            Icons.notifications,
+            color: _page == 3 ? blackColor : secondaryColor,
+          ),
+          Icon(
+            Icons.person,
+            color: _page == 4 ? blackColor : secondaryColor,
+          ),
           // BottomNavigationBarItem(
           //   icon: Icon(
           //     Icons.home,

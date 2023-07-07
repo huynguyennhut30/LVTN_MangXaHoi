@@ -2,8 +2,12 @@ import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:lvtn_mangxahoi/models/user.dart' as model;
 import 'package:lvtn_mangxahoi/resources/storage_method.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:lvtn_mangxahoi/utils/key_shared.dart';
+import 'package:lvtn_mangxahoi/utils/sharedpreference.dart';
 
 class AuthMethod {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -39,17 +43,19 @@ class AuthMethod {
             .uploadImageToStorage('profilePic', file, false);
 
         model.User user = model.User(
-            username: username,
-            uid: cred.user!.uid,
-            photoUrl: photoUrl,
-            email: email,
-            bio: bio,
-            createdAt: '',
-            isOnline: false,
-            lastActive: '',
-            pushToken: '',
-            followers: [],
-            following: []);
+          username: username,
+          uid: cred.user!.uid,
+          photoUrl: photoUrl,
+          email: email,
+          bio: bio,
+          createdAt: '',
+          isOnline: false,
+          lastActive: '',
+          pushToken: '',
+          followers: [],
+          following: [],
+          titleUser: [],
+        );
 
         await _firestore.collection("users").doc(cred.user!.uid).set(
               user.toJson(),
@@ -64,6 +70,8 @@ class AuthMethod {
         //   'following': [],
         // });
         res = "success";
+        String a = await _auth.currentUser!.uid;
+        sharedPreferences.setString(keyShared.CURRENTUSER, a);
       }
     } on FirebaseAuthException catch (err) {
       if (err.code == 'invalid-email') {
@@ -88,6 +96,8 @@ class AuthMethod {
           password: password,
         );
         res = "success";
+        String a = await _auth.currentUser!.uid;
+        sharedPreferences.setString(keyShared.CURRENTUSER, a);
       } else {
         res = "Please enter all the fields";
       }
@@ -98,6 +108,17 @@ class AuthMethod {
   }
 
   Future<void> signOut() async {
+    // await DefaultCacheManager().emptyCache();
+    // await DefaultCacheManager().emptyCache();
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // await prefs.clear();
     await _auth.signOut();
   }
 }
+
+Future<void> clearUserData() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.clear();
+}
+
+AuthMethod aut = AuthMethod();

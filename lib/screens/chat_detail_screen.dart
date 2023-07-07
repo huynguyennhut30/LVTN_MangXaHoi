@@ -1,12 +1,9 @@
-import 'dart:convert';
 import 'dart:io';
-import 'dart:math';
 
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lvtn_mangxahoi/models/user.dart';
-import 'package:lvtn_mangxahoi/screens/profile_screen.dart';
 import 'package:lvtn_mangxahoi/screens/view_profile_screen.dart';
 import 'package:lvtn_mangxahoi/utils/colors.dart';
 import 'package:lvtn_mangxahoi/widgets/message_details/message_detail_background.dart';
@@ -17,8 +14,8 @@ import '../resources/firestore_methods.dart';
 import '../widgets/message_card.dart';
 
 class ChatDetailScreen extends StatefulWidget {
-  final User user;
-  const ChatDetailScreen({super.key, required this.user});
+  final User? user;
+  const ChatDetailScreen({super.key, this.user});
 
   @override
   State<ChatDetailScreen> createState() => _ChatDetailScreenState();
@@ -46,7 +43,8 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
               children: [
                 Expanded(
                   child: StreamBuilder(
-                    stream: FireStoreMethods.getAllMessages(widget.user),
+                    stream: FireStoreMethods.getAllMessages(widget.user!),
+                    // stream: FireStoreMethods.getAllChat(widget.user),
                     builder: (context, snapshot) {
                       switch (snapshot.connectionState) {
                         //if data is loading
@@ -143,10 +141,12 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (_) => ViewProfileScreen(user: widget.user,)));
+                builder: (_) => ViewProfileScreen(
+                      user: widget.user!,
+                    )));
       },
       child: StreamBuilder(
-        stream: FireStoreMethods.getUserInfo(widget.user),
+        stream: FireStoreMethods.getUserInfo(widget.user!),
         builder: (context, snapshot) {
           final data = snapshot.data?.docs;
           final list = data?.map((e) => User.fromJson(e.data())).toList() ?? [];
@@ -161,17 +161,17 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
               ),
               CircleAvatar(
                 backgroundImage: NetworkImage(
-                  list.isNotEmpty ? list[0].photoUrl : widget.user.photoUrl,
+                  list.isNotEmpty ? list[0].photoUrl : widget.user!.photoUrl,
                 ),
                 maxRadius: 16.0,
               ),
-              SizedBox(width: 10),
+              const SizedBox(width: 10),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    list.isNotEmpty ? list[0].username : widget.user.username,
+                    list.isNotEmpty ? list[0].username : widget.user!.username,
                     style: const TextStyle(
                       color: kBlack,
                       fontWeight: FontWeight.w500,
@@ -187,7 +187,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                                 lastActive: list[0].lastActive)
                         : MyDateUtil.getLastActiveTime(
                             context: context,
-                            lastActive: widget.user.lastActive),
+                            lastActive: widget.user!.lastActive),
                     style: const TextStyle(
                       color: Colors.black54,
                       fontSize: 13,
@@ -207,7 +207,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
       children: [
         Expanded(
           child: Card(
-            color: Color.fromARGB(43, 34, 105, 226),
+            color: const Color.fromARGB(43, 34, 105, 226),
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
             shadowColor: Colors.transparent,
@@ -218,7 +218,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                     FocusScope.of(context).unfocus();
                     setState(() => _showEmoji = !_showEmoji);
                   },
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.emoji_emotions,
                     size: 25,
                     color: Colors.blueAccent,
@@ -232,7 +232,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                       if (_showEmoji) setState(() => _showEmoji = !_showEmoji);
                     },
                     maxLines: null,
-                    style: TextStyle(color: kBlack),
+                    style: const TextStyle(color: kBlack),
                     decoration: const InputDecoration(
                       hintText: 'Nhắn tin...',
                       hintStyle: TextStyle(
@@ -253,11 +253,11 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                       // log('Image Path: ${image.path}');
                       setState(() => _isUploading = true);
                       await FireStoreMethods.sendChatImage(
-                          widget.user, File(i.path));
+                          widget.user!, File(i.path));
                       setState(() => _isUploading = false);
                     }
                   },
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.image,
                     size: 25,
                     color: Colors.blueAccent,
@@ -275,11 +275,11 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                       setState(() => _isUploading = true);
 
                       await FireStoreMethods.sendChatImage(
-                          widget.user, File(image.path));
+                          widget.user!, File(image.path));
                       setState(() => _isUploading = false);
                     }
                   },
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.camera,
                     size: 25,
                     color: Colors.blueAccent,
@@ -292,16 +292,21 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
         MaterialButton(
           onPressed: () {
             if (_textController.text.isNotEmpty) {
-              FireStoreMethods.sendMessage(
-                  widget.user, _textController.text, Type.text);
-              _textController.text = '';
+              if (_list.isEmpty) {
+                FireStoreMethods.sendFirstMessage(
+                    widget.user!, _textController.text, Type.text);
+              } else {
+                FireStoreMethods.sendMessage(
+                    widget.user!, _textController.text, Type.text);
+                _textController.text = '';
+              }
             }
           },
-          shape: CircleBorder(side: BorderSide.none),
+          shape: const CircleBorder(side: BorderSide.none),
           padding: const EdgeInsets.fromLTRB(10, 10, 5, 10),
           minWidth: 0,
           color: kWhite,
-          child: Icon(
+          child: const Icon(
             Icons.send,
             color: Colors.blueAccent,
             size: 28,

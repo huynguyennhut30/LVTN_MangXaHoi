@@ -34,7 +34,7 @@ class _MessageCardState extends State<MessageCard> {
         Flexible(
           child: Container(
             padding: EdgeInsets.all(widget.message.type == Type.image ? 3 : 4),
-            margin: EdgeInsets.symmetric(horizontal: 4, vertical: 1),
+            margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
             decoration: BoxDecoration(
                 color: const Color.fromARGB(255, 221, 245, 255),
                 border: Border.all(color: Colors.lightBlue),
@@ -90,16 +90,16 @@ class _MessageCardState extends State<MessageCard> {
       children: [
         Flexible(
           child: Container(
-            padding: EdgeInsets.all(13),
-            margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
+            padding: const EdgeInsets.all(13),
+            margin: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
             decoration: BoxDecoration(
-              color: Color.fromARGB(255, 213, 220, 223),
+              color: const Color.fromARGB(255, 213, 220, 223),
               borderRadius: BorderRadius.circular(18),
             ),
             child: widget.message.type == Type.text
                 ? Text(
                     widget.message.msg,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: kBlack,
                       fontSize: 15,
                     ),
@@ -133,7 +133,7 @@ class _MessageCardState extends State<MessageCard> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        SizedBox(width: 5),
+        const SizedBox(width: 5),
         Row(
           children: [
             if (widget.message.read.isNotEmpty)
@@ -142,7 +142,7 @@ class _MessageCardState extends State<MessageCard> {
                 color: Colors.blue,
                 size: 20,
               ),
-            SizedBox(width: 2),
+            const SizedBox(width: 2),
             Text(
               MyDateUtil.getFormattedTime(
                   context: context, time: widget.message.sent),
@@ -152,16 +152,16 @@ class _MessageCardState extends State<MessageCard> {
         ),
         Flexible(
           child: Container(
-            padding: EdgeInsets.all(13),
-            margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
+            padding: const EdgeInsets.all(13),
+            margin: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
             decoration: BoxDecoration(
-              color: Color.fromARGB(255, 221, 245, 255),
+              color: const Color.fromARGB(255, 221, 245, 255),
               borderRadius: BorderRadius.circular(18),
             ),
             child: widget.message.type == Type.text
                 ? Text(
                     widget.message.msg,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: kBlack,
                       fontSize: 15,
                     ),

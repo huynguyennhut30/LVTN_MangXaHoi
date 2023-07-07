@@ -1,23 +1,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:lvtn_mangxahoi/provider/user_provider.dart';
-import 'package:provider/provider.dart';
+import 'package:lvtn_mangxahoi/models/comment.dart';
+import 'package:lvtn_mangxahoi/resources/firestore_methods.dart';
 import 'package:uuid/uuid.dart';
 
-import '../models/comment.dart';
-import '../models/user.dart';
-import '../resources/firestore_methods.dart';
+import 'package:lvtn_mangxahoi/models/user.dart';
+import 'package:lvtn_mangxahoi/provider/user_provider.dart';
+import 'package:provider/provider.dart';
 
-class CommentScreen extends StatefulWidget {
+class commentScreen extends StatefulWidget {
   final String postId;
-  const CommentScreen({super.key, required this.postId});
+  final String uidPost;
+  const commentScreen({super.key, required this.postId, required this.uidPost});
 
   @override
-  State<CommentScreen> createState() => _CommentScreenState();
+  State<commentScreen> createState() => _commentScreenState();
 }
 
-class _CommentScreenState extends State<CommentScreen> {
+class _commentScreenState extends State<commentScreen> {
   TextEditingController txtedit = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -31,11 +32,11 @@ class _CommentScreenState extends State<CommentScreen> {
             onTap: () {
               Navigator.pop(context);
             },
-            child: Icon(
+            child: const Icon(
               Icons.arrow_back_outlined,
               color: Colors.black,
             )),
-        title: Text(
+        title: const Text(
           "Bình luận",
           style: TextStyle(color: Colors.black),
         ),
@@ -71,19 +72,19 @@ class _CommentScreenState extends State<CommentScreen> {
         },
       ),
       bottomSheet: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             color: Colors.white,
             border: Border(top: BorderSide(color: Colors.grey, width: 0.5))),
-        padding: EdgeInsets.only(left: 10, right: 10),
+        padding: const EdgeInsets.only(left: 10, right: 10),
         child: Row(
           children: [
             Expanded(
               child: Container(
-                padding: EdgeInsets.only(left: 10),
+                padding: const EdgeInsets.only(left: 10),
                 child: TextField(
                   controller: txtedit,
-                  style: TextStyle(color: Colors.black, fontSize: 12),
-                  decoration: InputDecoration(
+                  style: const TextStyle(color: Colors.black, fontSize: 12),
+                  decoration: const InputDecoration(
                     hintText: "Thêm bình luận..",
                     hintStyle: TextStyle(color: Colors.black, fontSize: 12),
                   ),
@@ -101,13 +102,12 @@ class _CommentScreenState extends State<CommentScreen> {
                       uimage: user.photoUrl,
                       username: user.username,
                       postId: widget.postId);
-                  fireMethod.addComment(cmt);
+                  fireMethod.addComment(cmt, widget.uidPost);
                   txtedit.text = "";
                 },
-                child: Text(
+                child: const Text(
                   "Đăng",
-                  style: TextStyle(
-                      color: const Color.fromARGB(196, 158, 158, 158)),
+                  style: TextStyle(color: Colors.blueAccent),
                 ))
           ],
         ),
@@ -139,19 +139,19 @@ class cardComment extends StatelessWidget {
           children: [
             Text(
               ds['username'],
-              style: TextStyle(color: Colors.black),
+              style: const TextStyle(color: Colors.black),
             ),
-            SizedBox(
+            const SizedBox(
               width: 4,
             ),
             Text(DateFormat('hh:mm a').format(ds['datePublished'].toDate()),
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 8, color: Color.fromARGB(255, 146, 139, 139))),
           ],
         ),
         subtitle: Text(
           ds['content'],
-          style: TextStyle(color: Colors.black),
+          style: const TextStyle(color: Colors.black),
         ),
       ),
     );

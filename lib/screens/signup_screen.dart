@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lvtn_mangxahoi/resources/auth_method.dart';
+import 'package:lvtn_mangxahoi/screens/choice_title.dart';
 import 'package:lvtn_mangxahoi/screens/login_screen.dart';
 import 'package:lvtn_mangxahoi/utils/utils.dart';
 
@@ -61,12 +62,18 @@ class _SignupScreenState extends State<SignupScreen> {
     if (res != 'success') {
       showSnackBar(context, res);
     } else {
-      Navigator.of(context).pushReplacement(
+      // Navigator.of(context).pushReplacement(
+      //   MaterialPageRoute(
+      //     builder: (context) => const ResponsiveLayout(
+      //       mobileScreenLayout: MobileScreenLayout(),
+      //       webScreenLayout: WebScreenLayout(),
+      //     ),
+      //   ),
+      // );
+      Navigator.push(
+        context,
         MaterialPageRoute(
-          builder: (context) => const ResponsiveLayout(
-            mobileScreenLayout: MobileScreenLayout(),
-            webScreenLayout: WebScreenLayout(),
-          ),
+          builder: (context) => const ChoiceTitle(),
         ),
       );
     }
@@ -122,24 +129,30 @@ class _SignupScreenState extends State<SignupScreen> {
             ),
             const SizedBox(height: 20),
             TextFieldInput(
-                textEditingController: _usernameController,
-                hintText: 'Enter your username',
-                textInputType: TextInputType.text),
+              textEditingController: _usernameController,
+              hintText: 'Enter your username',
+              textInputType: TextInputType.text,
+              icon: Icon(Icons.person),
+            ),
             const SizedBox(height: 20),
             TextFieldInput(
-                textEditingController: _emailController,
-                hintText: 'Enter your email',
-                textInputType: TextInputType.emailAddress),
+              textEditingController: _emailController,
+              hintText: 'Enter your email',
+              textInputType: TextInputType.emailAddress,
+              icon: Icon(Icons.email),
+            ),
             const SizedBox(height: 20),
             TextFieldInput(
               textEditingController: _passwordController,
               hintText: 'Enter your password',
               textInputType: TextInputType.visiblePassword,
+              icon: Icon(Icons.lock),
               isPass: true,
             ),
             const SizedBox(height: 20),
             TextFieldInput(
                 textEditingController: _bioController,
+                icon: Icon(Icons.book),
                 hintText: 'Enter your bio',
                 textInputType: TextInputType.text),
             const SizedBox(height: 20),
@@ -175,7 +188,10 @@ class _SignupScreenState extends State<SignupScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  child: Text("Don't have an account?"),
+                  child: Text(
+                    "Don't have an account?",
+                    style: TextStyle(color: kBlack),
+                  ),
                   padding: const EdgeInsets.symmetric(
                     vertical: 8,
                   ),
@@ -185,7 +201,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   child: Container(
                     child: Text(
                       "Login",
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: TextStyle(fontWeight: FontWeight.bold, color: kBlack),
                     ),
                     padding: const EdgeInsets.symmetric(
                       vertical: 8,
